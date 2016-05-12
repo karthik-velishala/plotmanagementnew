@@ -31,6 +31,7 @@ public class PropertyController {
 	public Object getAllRecords(
 			@RequestParam(value = "id", required = false) String id) {
 		if (id != null) {
+			System.out.println(id);
 			Property property = propertyRepository.findOne(id);
 			return property;
 		}
@@ -58,7 +59,7 @@ public class PropertyController {
 
 			Owner owner = createProperty.getOwner();
 			String email = owner.getEmail();
-			Owner testowner = ownerRepository.findOne(owner.getOwner_Id());
+			Owner testowner = ownerRepository.findOne(owner.getId());
 			List<Owner> testownerByemail = ownerRepository.findByEmail(email);
 
 			if ((testowner == null) && ((testownerByemail).size() == 0)) {
@@ -101,7 +102,7 @@ public class PropertyController {
 			property.setPropertyType(updateProperty.getPropertyType());
 			Owner owner = updateProperty.getOwner();
 			// System.out.println(owner.getOwner_Id());
-			Owner testIfExists = ownerRepository.findOne(owner.getOwner_Id());
+			Owner testIfExists = ownerRepository.findOne(owner.getId());
 			System.out.println(testIfExists);
 			if (testIfExists == null) {
 				// System.out.println("owner not present");
@@ -117,7 +118,7 @@ public class PropertyController {
 	}
 
 	/* deleting a property */
-	
+
 	@RequestMapping(value = "/property/delete/{propertyId}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public String delete(@PathVariable String propertyId) {
@@ -130,6 +131,7 @@ public class PropertyController {
 		return "Property succesfully deleted!";
 	}
 
+	/* getting property by city */
 	@RequestMapping(value = "/property/get-by-city", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Property> getByCity(@RequestParam(value = "city") String city) {
@@ -138,14 +140,20 @@ public class PropertyController {
 		return property;
 
 	}
-
-	/* getting list of all owners */
 	
-	@RequestMapping(value = "/owners", method = RequestMethod.GET)
+	/*getting owner details of property*/
+	@RequestMapping(value="/property/owner/{propertyId}",method = RequestMethod.GET)
 	@ResponseBody
-	public List<Owner> getAllOwners() {
-		List<Owner> owners = ownerRepository.findAll();
-		return owners;
+	public Object getOwnerDetails(@PathVariable String propertyId)
+	{
+		Property property=propertyRepository.findOne(propertyId);
+		if(property==null)
+		{
+			return "property with entered Id doesnot exists";
+		}
+		Owner owner=property.getOwner();
+		return owner;
 	}
+	
 
 }

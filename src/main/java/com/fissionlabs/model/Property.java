@@ -50,7 +50,7 @@ public class Property {
 	//@ManyToOne
 	//@JoinColumn(name = "owner_Id")
 	 @DBRef
-	 
+	 //@JsonIgnore
 	private Owner owner;
 
 	public Owner getOwner() {

@@ -2,6 +2,8 @@ package com.fissionlabs.model;
 
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,13 +14,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Document(collection = "owner")
 public class Owner {
 	@Id
-	private String owner_Id;
+	private String id;
 
-	public Owner(String owner_Id, String firstName, String lastName,
+	public Owner(String id, String firstName, String lastName,
 			String country, String dob, String gender, String contactNo,
 			String email) {
 		super();
-		this.owner_Id = owner_Id;
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.country = country;
@@ -33,7 +35,7 @@ public class Owner {
 
 	private String firstName;
 	private String lastName;
-
+@NotNull
 	private String country;
 	private String dob;
 	private String gender;
@@ -53,12 +55,12 @@ public class Owner {
 		this.property = property;
 	}
 
-	public String getOwner_Id() {
-		return owner_Id;
+	public String getId() {
+		return id;
 	}
 
-	public void setOwner_Id(String owner_Id) {
-		this.owner_Id = owner_Id;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -115,5 +117,9 @@ public class Owner {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public Owner(String id)
+	{
+		this.id=id;
 	}
 }
