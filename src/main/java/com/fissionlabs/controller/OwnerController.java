@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fissionlabs.dto.OwnerDTO;
@@ -22,8 +21,7 @@ public class OwnerController {
 	OwnerRepository ownerRepository;
 
 	/* getting list of all owners */
-	@RequestMapping(value="/owner",method=RequestMethod.GET)
-	@ResponseBody
+	@RequestMapping(value = "/owner", method = RequestMethod.GET)
 	public Object getAllRecords(
 			@RequestParam(value = "ownerId", required = false) String ownerId) {
 		System.out.println(ownerId);
@@ -42,7 +40,6 @@ public class OwnerController {
 	/*----creating owner----*/
 
 	@RequestMapping(value = "/owner", method = RequestMethod.POST)
-	@ResponseBody
 	public String createOwner(@RequestBody OwnerDTO ownerDTO) {
 		try {
 
@@ -73,7 +70,6 @@ public class OwnerController {
 
 	/* deleting the owner */
 	@RequestMapping(value = "/owner/{id}", method = RequestMethod.DELETE)
-	@ResponseBody
 	public String deleteOwner(@PathVariable String id) {
 		try {
 			Owner owner = ownerRepository.findOne(id);
@@ -86,7 +82,6 @@ public class OwnerController {
 
 	/* updating the owner */
 	@RequestMapping(value = "/owner/{id}", method = RequestMethod.PUT)
-	@ResponseBody
 	public String updateOwner(@PathVariable String id,
 			@RequestBody OwnerDTO ownerDTO) {
 		try {

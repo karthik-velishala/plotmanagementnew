@@ -10,13 +10,30 @@ public class PropertyLocation {
 
 	@Id
 	private String id;
-	
+
 	private double[] location;
 
 	private List<String> tags;
 	private String source;
 	private Date timestamp;
+	private Object meta;
+	private Double accuracy;
 
+	public Object getMeta() {
+		return meta;
+	}
+
+	public void setMeta(Object meta) {
+		this.meta = meta;
+	}
+
+	public Double getAccuracy() {
+		return accuracy;
+	}
+
+	public void setAccuracy(Double accuracy) {
+		this.accuracy = accuracy;
+	}
 
 	public double[] getLocation() {
 		return location;

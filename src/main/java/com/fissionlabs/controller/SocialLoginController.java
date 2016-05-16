@@ -23,7 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fission.SampleJavascriptSignIN.Google2Api;
 import com.fissionlabs.dto.GoogleUserDTO;
 import com.fissionlabs.dto.ResponseDTO;
-import com.fissionlabs.dto.TokenDTO;
 import com.fissionlabs.model.User;
 import com.fissionlabs.repository.UserRepository;
 import com.fissionlabs.security.TokenHandler;
@@ -87,7 +86,7 @@ public class SocialLoginController {
 		}
 
 		String jwt = tokenHandler.createTokenForUser(user);
-		TokenDTO tokenDTO = new TokenDTO(jwt);
+		//TokenDTO tokenDTO = new TokenDTO(jwt);
 		/*
 		 * System.out.println(tokenDTO); System.out.println(jwt);
 		 */

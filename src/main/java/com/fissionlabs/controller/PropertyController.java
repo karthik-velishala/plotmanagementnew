@@ -3,13 +3,12 @@ package com.fissionlabs.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fissionlabs.dto.PropertyDTO;
 import com.fissionlabs.model.GenericResponse;
@@ -18,7 +17,7 @@ import com.fissionlabs.model.Property;
 import com.fissionlabs.repository.OwnerRepository;
 import com.fissionlabs.repository.PropertyRepository;
 
-@Controller
+@RestController
 public class PropertyController {
 	@Autowired
 	PropertyRepository propertyRepository;
@@ -27,8 +26,7 @@ public class PropertyController {
 
 	/* getting list of all properties */
 
-	@RequestMapping(value="/property",method=RequestMethod.GET)
-	@ResponseBody
+	@RequestMapping(value = "/property", method = RequestMethod.GET)
 	public Object getAllRecords(
 			@RequestParam(value = "id", required = false) String id) {
 		if (id != null) {
@@ -43,9 +41,9 @@ public class PropertyController {
 	/* creating new property */
 
 	@RequestMapping(value = "/property", method = RequestMethod.POST)
-	@ResponseBody
 	public GenericResponse create(@RequestBody PropertyDTO createProperty) {
 		GenericResponse res = new GenericResponse();
+		@SuppressWarnings("unused")
 		String propertyId = null;
 		try {
 			Property property = new Property();
@@ -91,7 +89,6 @@ public class PropertyController {
 	/* updating a property */
 
 	@RequestMapping(value = "/property/{propertyId}", method = RequestMethod.PUT)
-	@ResponseBody
 	public String updateProperty(@RequestBody PropertyDTO updateProperty,
 			@PathVariable String propertyId) {
 		try {
@@ -129,7 +126,6 @@ public class PropertyController {
 	/* deleting a property */
 
 	@RequestMapping(value = "/property/{propertyId}", method = RequestMethod.DELETE)
-	@ResponseBody
 	public String delete(@PathVariable String propertyId) {
 		try {
 			Property property = new Property(propertyId);
@@ -142,7 +138,6 @@ public class PropertyController {
 
 	/* getting property by city */
 	@RequestMapping(value = "/property/get-by-city", method = RequestMethod.GET)
-	@ResponseBody
 	public List<Property> getByCity(@RequestParam(value = "city") String city) {
 
 		List<Property> property = propertyRepository.findByCity(city);
@@ -152,7 +147,6 @@ public class PropertyController {
 
 	/* getting owner details of property */
 	@RequestMapping(value = "/property/owner/{propertyId}", method = RequestMethod.GET)
-	@ResponseBody
 	public Object getOwnerDetails(@PathVariable String propertyId) {
 		Property property = propertyRepository.findOne(propertyId);
 		if (property == null) {
@@ -164,7 +158,6 @@ public class PropertyController {
 
 	/* getting all properties by status */
 	@RequestMapping(value = "/property/{status}", method = RequestMethod.GET)
-	@ResponseBody
 	public List<Property> getAvailableProperties(@PathVariable String status) {
 		List<Property> properties = propertyRepository.findByStatus(status);
 		return properties;
