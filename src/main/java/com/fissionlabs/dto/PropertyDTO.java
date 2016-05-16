@@ -14,6 +14,13 @@ public class PropertyDTO {
 	private String hno;
 	private String roadno;
 	private String landmark;
+	private String status;
+public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 public String getHno() {
 		return hno;
 	}

@@ -84,7 +84,7 @@ public final class TokenHandler {
 		byte[] userBytes = toJSON(userDTO);
 		byte[] hash = createHmac(userBytes);
 		final StringBuilder sb = new StringBuilder(200);
-		sb.append("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
+		//sb.append("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
 		sb.append(toBase64(userBytes));
 		sb.append(SEPARATOR);
 		sb.append(toBase64(hash));

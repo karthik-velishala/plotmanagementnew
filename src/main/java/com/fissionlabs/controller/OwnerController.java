@@ -22,7 +22,7 @@ public class OwnerController {
 	OwnerRepository ownerRepository;
 
 	/* getting list of all owners */
-	@RequestMapping("/owner/get")
+	@RequestMapping(value="/owner",method=RequestMethod.GET)
 	@ResponseBody
 	public Object getAllRecords(
 			@RequestParam(value = "ownerId", required = false) String ownerId) {
@@ -39,21 +39,9 @@ public class OwnerController {
 		}
 	}
 
-	/*
-	 * @RequestMapping("/property/get")
-	 * 
-	 * @ResponseBody public Object getAllRecords(
-	 * 
-	 * @RequestParam(value = "id", required = false) String id) { if (id !=
-	 * null) { Property property = propertyRepository.findOne(id); return
-	 * property; } return propertyRepository.findAll();
-	 * 
-	 * }
-	 */
-
 	/*----creating owner----*/
 
-	@RequestMapping(value = "/owner/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/owner", method = RequestMethod.POST)
 	@ResponseBody
 	public String createOwner(@RequestBody OwnerDTO ownerDTO) {
 		try {
@@ -84,7 +72,7 @@ public class OwnerController {
 	}
 
 	/* deleting the owner */
-	@RequestMapping(value = "/owner/delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/owner/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteOwner(@PathVariable String id) {
 		try {
@@ -97,7 +85,7 @@ public class OwnerController {
 	}
 
 	/* updating the owner */
-	@RequestMapping(value = "/owner/update/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/owner/{id}", method = RequestMethod.PUT)
 	@ResponseBody
 	public String updateOwner(@PathVariable String id,
 			@RequestBody OwnerDTO ownerDTO) {

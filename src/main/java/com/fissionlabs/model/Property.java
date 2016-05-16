@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Document(collection = "property")
 public class Property {
 	@Id
@@ -21,6 +20,7 @@ public class Property {
 	private String hno;
 	private String roadno;
 	private String landmark;
+	private String status;
 
 	public String getHno() {
 		return hno;
@@ -46,11 +46,10 @@ public class Property {
 		this.landmark = landmark;
 	}
 
-	 
-	//@ManyToOne
-	//@JoinColumn(name = "owner_Id")
-	 @DBRef
-	 //@JsonIgnore
+	// @ManyToOne
+	// @JoinColumn(name = "owner_Id")
+	@DBRef
+	// @JsonIgnore
 	private Owner owner;
 
 	public Owner getOwner() {
@@ -123,7 +122,7 @@ public class Property {
 
 	public Property(String propertyId, String propertyType, int noOfRooms,
 			int area, int price, String propertyName, String city, Owner owner,
-			String hno, String roadno, String landmark) {
+			String hno, String roadno, String landmark, String status) {
 		super();
 		this.propertyId = propertyId;
 		this.propertyType = propertyType;
@@ -133,10 +132,19 @@ public class Property {
 		this.propertyName = propertyName;
 		this.city = city;
 		this.owner = owner;
-		this.hno=hno;
-		this.roadno=roadno;
-		this.landmark=landmark;
+		this.hno = hno;
+		this.roadno = roadno;
+		this.landmark = landmark;
+		this.status = status;
 
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Property() {

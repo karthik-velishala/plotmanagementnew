@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fissionlabs.dto.PropertyDTO;
+import com.fissionlabs.model.GenericResponse;
 import com.fissionlabs.model.Owner;
 import com.fissionlabs.model.Property;
 import com.fissionlabs.repository.OwnerRepository;
@@ -26,7 +27,7 @@ public class PropertyController {
 
 	/* getting list of all properties */
 
-	@RequestMapping("/property/get")
+	@RequestMapping(value="/property",method=RequestMethod.GET)
 	@ResponseBody
 	public Object getAllRecords(
 			@RequestParam(value = "id", required = false) String id) {
@@ -41,9 +42,10 @@ public class PropertyController {
 
 	/* creating new property */
 
-	@RequestMapping(value = "/property/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/property", method = RequestMethod.POST)
 	@ResponseBody
-	public String create(@RequestBody PropertyDTO createProperty) {
+	public GenericResponse create(@RequestBody PropertyDTO createProperty) {
+		GenericResponse res = new GenericResponse();
 		String propertyId = null;
 		try {
 			Property property = new Property();
@@ -56,6 +58,7 @@ public class PropertyController {
 			property.setHno(createProperty.getHno());
 			property.setLandmark(createProperty.getLandmark());
 			property.setRoadno(createProperty.getRoadno());
+			property.setStatus(createProperty.getStatus());
 
 			Owner owner = createProperty.getOwner();
 			String email = owner.getEmail();
@@ -64,24 +67,30 @@ public class PropertyController {
 
 			if ((testowner == null) && ((testownerByemail).size() == 0)) {
 
-				ownerRepository.save(owner);
-			} else
-				return "old owner or email already existed";
-
+				owner = ownerRepository.save(owner);
+			}
 			property.setOwner(createProperty.getOwner());
 			property = propertyRepository.save(property);
 			propertyId = property.getPropertyId();
 			System.out.println("entered");
+			res.setSuccess(true);
+			res.setMessage("property successfully created");
+			res.setData(owner);
 
 		} catch (Exception ex) {
-			return "Error creating the property: " + ex.toString();
+			// return "Error creating the property: " + ex.toString();
+			res.setMessage(ex.toString());
+			res.setSuccess(false);
+			res.setData(null);
+			return res;
 		}
-		return "Property succesfully created with id = " + propertyId;
+		// return "Property succesfully created with id = " + propertyId;
+		return res;
 	}
 
 	/* updating a property */
 
-	@RequestMapping(value = "/property/update/{propertyId}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/property/{propertyId}", method = RequestMethod.PUT)
 	@ResponseBody
 	public String updateProperty(@RequestBody PropertyDTO updateProperty,
 			@PathVariable String propertyId) {
@@ -119,7 +128,7 @@ public class PropertyController {
 
 	/* deleting a property */
 
-	@RequestMapping(value = "/property/delete/{propertyId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/property/{propertyId}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public String delete(@PathVariable String propertyId) {
 		try {
@@ -140,20 +149,25 @@ public class PropertyController {
 		return property;
 
 	}
-	
-	/*getting owner details of property*/
-	@RequestMapping(value="/property/owner/{propertyId}",method = RequestMethod.GET)
+
+	/* getting owner details of property */
+	@RequestMapping(value = "/property/owner/{propertyId}", method = RequestMethod.GET)
 	@ResponseBody
-	public Object getOwnerDetails(@PathVariable String propertyId)
-	{
-		Property property=propertyRepository.findOne(propertyId);
-		if(property==null)
-		{
+	public Object getOwnerDetails(@PathVariable String propertyId) {
+		Property property = propertyRepository.findOne(propertyId);
+		if (property == null) {
 			return "property with entered Id doesnot exists";
 		}
-		Owner owner=property.getOwner();
+		Owner owner = property.getOwner();
 		return owner;
 	}
-	
+
+	/* getting all properties by status */
+	@RequestMapping(value = "/property/{status}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Property> getAvailableProperties(@PathVariable String status) {
+		List<Property> properties = propertyRepository.findByStatus(status);
+		return properties;
+	}
 
 }
