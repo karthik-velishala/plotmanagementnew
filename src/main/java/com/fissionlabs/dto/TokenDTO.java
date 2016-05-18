@@ -1,12 +1,5 @@
 package com.fissionlabs.dto;
 
-
-/**
- * Data transfer object for Login. Primariy used for user authentication/login.
- * 
- * @author Karthik
- *
- */
 public class TokenDTO {
 
 	private String token;

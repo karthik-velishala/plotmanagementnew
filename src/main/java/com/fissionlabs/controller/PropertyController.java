@@ -32,7 +32,10 @@ public class PropertyController {
 		if (id != null) {
 			System.out.println(id);
 			Property property = propertyRepository.findOne(id);
+			if(property!=null)
 			return property;
+			else
+				return "property not found";
 		}
 		return propertyRepository.findAll();
 
@@ -73,7 +76,7 @@ public class PropertyController {
 			System.out.println("entered");
 			res.setSuccess(true);
 			res.setMessage("property successfully created");
-			res.setData(owner);
+			res.setData(property);
 
 		} catch (Exception ex) {
 			// return "Error creating the property: " + ex.toString();

@@ -31,10 +31,10 @@ public class UserDTO {
 	private String phoneNumber;
 	private String userRole;
 	private Long expires;
-	private String profileImage;
 	private Boolean hasMeta;
 	private Map<String, String> userActivity;
 	private Map<String, String> userMeta;
+	private String picture;
 
 	public UserDTO() {
 
@@ -48,7 +48,7 @@ public class UserDTO {
 		this.accountLocked = userDTOBuilder.accountLocked;
 		this.phoneNumber = userDTOBuilder.phoneNumber;
 		this.userRole = userDTOBuilder.userRole;
-		this.profileImage = userDTOBuilder.profileImage;
+		this.picture = userDTOBuilder.picture;
 		this.expires = userDTOBuilder.expires;
 
 		this.hasMeta = this.userMeta != null && this.userMeta.size() > 0;
@@ -56,7 +56,7 @@ public class UserDTO {
 
 	/**
 	 * 
-	 * @author Adil
+	 * @author Karthik
 	 *
 	 */
 	public static class UserDTOBuilder {
@@ -68,7 +68,7 @@ public class UserDTO {
 		private Boolean accountLocked;
 		private String phoneNumber;
 		private String userRole;
-		private String profileImage;
+		private String picture;
 		private Long expires;
 
 		public UserDTOBuilder(User user) {
@@ -78,7 +78,7 @@ public class UserDTO {
 			this.createdAt = user.getCreatedAt() == null ? null : user
 					.getCreatedAt().getTime();
 			this.phoneNumber = user.getPhoneNumber();
-			this.profileImage = user.getProfileImage();
+			this.picture = user.getPicture();
 			this.userRole = user.getUserRole();
 
 		}
@@ -127,8 +127,8 @@ public class UserDTO {
 			return this;
 		}
 
-		public UserDTOBuilder profileImage(String profileImage) {
-			this.profileImage = profileImage;
+		public UserDTOBuilder profileImage(String picture) {
+			this.picture = picture;
 			return this;
 		}
 
@@ -199,12 +199,12 @@ public class UserDTO {
 		this.userActivity = userActivity;
 	}
 
-	public String getProfileImage() {
-		return profileImage;
+	public String getPicture() {
+		return picture;
 	}
 
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 
 	public Boolean getHasMeta() {

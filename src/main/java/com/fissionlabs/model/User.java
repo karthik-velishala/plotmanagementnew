@@ -39,8 +39,6 @@ public class User implements UserDetails {
 	@JsonIgnore
 	@Field(value = "password")
 	private String password;
-
-	// @Temporal(TemporalType.TIMESTAMP)
 	@Field(value = "created_at")
 	private Date createdAt;
 
@@ -59,7 +57,7 @@ public class User implements UserDetails {
 
 	@Field(value = "profile_image")
 	// , FieldDefinition = "text")
-	private String profileImage;
+	private String picture;
 
 	@Field(value = "user_role")
 	private String userRole = DEFAULT_ROLE;
@@ -147,12 +145,12 @@ public class User implements UserDetails {
 		return accountLocked;
 	}
 
-	public String getProfileImage() {
-		return profileImage;
+	public String getPicture() {
+		return picture;
 	}
 
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 
 	public Long getExpires() {
@@ -205,4 +203,6 @@ public class User implements UserDetails {
 			throw new IllegalStateException(e);
 		}
 	}
+
+	
 }

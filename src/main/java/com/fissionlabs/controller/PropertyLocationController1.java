@@ -28,7 +28,7 @@ public class PropertyLocationController1 {
 	MongoTemplate template;
 
 	/* creating property with location details(latitude and longitude) */
-	@RequestMapping(value = "/property", method = RequestMethod.POST)
+	@RequestMapping(value = "/property1", method = RequestMethod.POST)
 	public GenericResponse createProperty(
 			@RequestBody PropertyLocationDTO property) {
 		GenericResponse res = new GenericResponse();

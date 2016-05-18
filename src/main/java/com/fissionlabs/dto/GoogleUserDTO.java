@@ -6,6 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class GoogleUserDTO {
 	private String name;
 	private String email;
+	private String picture;
+	public void setProfileImage(String picture) {
+		this.picture = picture;
+	}
 	public String getName() {
 		return name;
 	}
@@ -18,6 +22,10 @@ public class GoogleUserDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public String getPicture() {
+		return picture;
+	}
+	
 	
 
 }

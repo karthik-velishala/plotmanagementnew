@@ -16,8 +16,7 @@ public class PropertyAddress {
 	private String Country;
 	private Integer pincode;
 	private String streetName;
-	//@OneToOne
-	//@JoinColumn(name="property_id")
+	
 	private Property property;;
 	
 	public Property getProperty() {

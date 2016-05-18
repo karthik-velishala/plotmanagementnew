@@ -14,14 +14,15 @@ import org.scribe.oauth.OAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fission.SampleJavascriptSignIN.Google2Api;
 import com.fissionlabs.dto.GoogleUserDTO;
+import com.fissionlabs.dto.LoginResponseDTO;
 import com.fissionlabs.dto.ResponseDTO;
 import com.fissionlabs.model.User;
 import com.fissionlabs.repository.UserRepository;
@@ -35,7 +36,7 @@ public class SocialLoginController {
 
 	String secretKey = "jMN_QJDnbzwQY-LeVA9TvUei";
 
-	String callbackUrl = "http://localhost:8080/googlesignin";
+	String callbackUrl = "http://localhost:3000/googlesignin";
 
 	private static final String SCOPE = "https://mail.google.com/ https://www.googleapis.com/auth/userinfo.email";
 
@@ -46,10 +47,11 @@ public class SocialLoginController {
 	private final TokenHandler tokenHandler = new TokenHandler(
 			DatatypeConverter.parseBase64Binary("secret"));
 
-	@RequestMapping(value = "/googlesignin", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/googlesignin", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<ResponseDTO<String>> getCode(
-			@RequestParam(value = "code") String code) throws Exception {
+			@RequestBody LoginResponseDTO response) throws Exception {
+		String code = response.getCode();
 
 		OAuthService service = new ServiceBuilder().provider(Google2Api.class)
 				.apiKey(apiKey).apiSecret(secretKey).callback(callbackUrl)
@@ -61,10 +63,10 @@ public class SocialLoginController {
 		OAuthRequest request = new OAuthRequest(Verb.GET,
 				PROTECTED_RESOURCE_URL);
 		service.signRequest(accessToken, request);
-		Response response = request.send();
-		System.out.println(response.getBody());
+		Response response1 = request.send();
+		System.out.println("response 1 is"+response1.getBody());
 		GoogleUserDTO userInfo = new ObjectMapper().readValue(
-				response.getBody(), GoogleUserDTO.class);
+				response1.getBody(), GoogleUserDTO.class);
 		String name = userInfo.getName();
 		String username = userInfo.getEmail();
 
@@ -77,16 +79,17 @@ public class SocialLoginController {
 			user.setCreatedAt(new Date());
 			user.setAccountEnabled(true);
 			user.setAccountLocked(false);
+			user.setPicture(userInfo.getPicture());
 			// System.out.println("entered");
 			System.out.println("Code is" + code);
-			System.out.println("user is" + user.toString());
+			//System.out.println("user is" + user.toString());
 			user = userRepository.save(user);
 			// System.out.println(user);
 
 		}
 
 		String jwt = tokenHandler.createTokenForUser(user);
-		//TokenDTO tokenDTO = new TokenDTO(jwt);
+		// TokenDTO tokenDTO = new TokenDTO(jwt);
 		/*
 		 * System.out.println(tokenDTO); System.out.println(jwt);
 		 */

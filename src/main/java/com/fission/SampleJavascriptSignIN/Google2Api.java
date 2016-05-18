@@ -30,7 +30,6 @@ public class Google2Api extends DefaultApi20 {
 	}
 
 	@Override
-	
 	public AccessTokenExtractor getAccessTokenExtractor() {
 		return new AccessTokenExtractor() {
 			@Override
@@ -41,9 +40,13 @@ public class Google2Api extends DefaultApi20 {
 
 				Matcher matcher = Pattern.compile(
 						"\"access_token\" : \"([^&\"]+)\"").matcher(response);
+				System.out.println("matcher is" + matcher.toString());
+				System.out.println("response is" + response);
 				if (matcher.find()) {
 					String token = OAuthEncoder.decode(matcher.group(1));
+					System.out.println("token is"+new Token(token,"",response));
 					return new Token(token, "", response);
+				
 				} else {
 					throw new OAuthException(
 							"Response body is incorrect. Can't extract a token from this: '"

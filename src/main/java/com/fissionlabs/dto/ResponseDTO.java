@@ -5,13 +5,6 @@ package com.fissionlabs.dto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * Generic data transfer object for sending unified responses for Rest calls.
- * 
- * @author Karthik
- *
- * @param <T>
- */
 public class ResponseDTO<T> {
 
 	private Boolean success;

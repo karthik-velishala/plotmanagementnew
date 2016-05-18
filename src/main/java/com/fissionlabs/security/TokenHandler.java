@@ -51,10 +51,10 @@ public final class TokenHandler {
 		UserDTO userDTO = null;
 		String copiedToken = token.replace("Bearer ", "");
 		final String[] parts = copiedToken.split(SEPARATOR_SPLITTER);
-		if (parts.length == 3 && parts[1].length() > 0 && parts[2].length() > 0) {
+		if (parts.length == 2&& parts[0].length() > 0 && parts[1].length() > 0) {
 			try {
-				final byte[] userBytes = fromBase64(parts[1]);
-				final byte[] hash = fromBase64(parts[2]);
+				final byte[] userBytes = fromBase64(parts[0]);
+				final byte[] hash = fromBase64(parts[1]);
 				boolean validHash = Arrays.equals(createHmac(userBytes), hash);
 				userDTO = checkValidHash(userBytes, validHash);
 			} catch (Exception e) {
@@ -80,7 +80,7 @@ public final class TokenHandler {
 
 		UserDTO userDTO = new UserDTO.UserDTOBuilder(user).expires(
 				System.currentTimeMillis() + TEN_DAYS).build();
-		userDTO.setUserMeta(null);
+		//userDTO.setUserMeta(null);
 		byte[] userBytes = toJSON(userDTO);
 		byte[] hash = createHmac(userBytes);
 		final StringBuilder sb = new StringBuilder(200);
