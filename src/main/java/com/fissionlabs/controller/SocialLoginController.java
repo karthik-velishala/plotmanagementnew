@@ -24,6 +24,7 @@ import com.fission.SampleJavascriptSignIN.Google2Api;
 import com.fissionlabs.dto.GoogleUserDTO;
 import com.fissionlabs.dto.LoginResponseDTO;
 import com.fissionlabs.dto.ResponseDTO;
+import com.fissionlabs.model.TokenResponse;
 import com.fissionlabs.model.User;
 import com.fissionlabs.repository.UserRepository;
 import com.fissionlabs.security.TokenHandler;
@@ -49,7 +50,7 @@ public class SocialLoginController {
 
 	@RequestMapping(value = "/api/googlesignin", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<ResponseDTO<String>> getCode(
+	public TokenResponse getCode(
 			@RequestBody LoginResponseDTO response) throws Exception {
 		String code = response.getCode();
 
@@ -93,12 +94,15 @@ public class SocialLoginController {
 		/*
 		 * System.out.println(tokenDTO); System.out.println(jwt);
 		 */
-		System.out.println(jwt);
-		return ResponseEntity
+		//System.out.println(jwt);
+		/*return ResponseEntity
 				.ok()
 				.header("Authorization", jwt)
 				.body(new ResponseDTO.ResponseDTOBuilder<>(true, null,
-						"login successful").build());
+						"login successful").build());*/
+		TokenResponse res=new TokenResponse();
+		res.setToken(jwt);
+		return res;
 
 	}
 }

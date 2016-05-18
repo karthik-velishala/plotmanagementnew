@@ -94,7 +94,7 @@ public class PropertyLocationController {
 		List<PropertyLocation> locations = propertyLocationRepository
 				.findByLocationNear(point, new Distance(proximity,
 						Metrics.KILOMETERS), new PageRequest(0, limit));
-
+System.out.println(locations.size());
 		return locations;
 
 	}

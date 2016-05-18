@@ -44,8 +44,7 @@ public class Property {
 		this.landmark = landmark;
 	}
 
-	// @ManyToOne
-	// @JoinColumn(name = "owner_Id")
+	
 	@DBRef
 	// @JsonIgnore
 	private Owner owner;
